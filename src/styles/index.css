@@ -1,0 +1,74 @@
+@import "tailwindcss";
+
+@theme {
+  --color-paper: #f5f0e8;
+  --color-paper-light: #faf7f0;
+  --color-ink: #3d3226;
+  --color-ink-light: #8b7d6b;
+  --color-ochre: #8b4513;
+  --color-seal: #c41e3a;
+  --color-border: #d4c5a9;
+  --color-inkwash: #9b8c7c;
+  --color-gold: #b8963e;
+  --color-jade: #7fa08b;
+  --color-silk: #e8dcc8;
+  --font-heading: "Noto Serif SC", "Source Han Serif SC", serif;
+  --font-body: "Noto Serif SC", serif;
+  --font-calligraphy: "Ma Shan Zheng", cursive;
+}
+
+/* Rice paper texture background */
+body {
+  background-color: #f5f0e8;
+  color: #3d3226;
+  font-family: var(--font-body);
+  line-height: 1.8;
+  position: relative;
+  min-height: 100vh;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg width='400' height='400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  opacity: 0.6;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #f5f0e8;
+}
+::-webkit-scrollbar-thumb {
+  background: #d4c5a9;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #9b8c7c;
+}
+
+/* Selection */
+::selection {
+  background-color: #d4c5a9;
+  color: #3d3226;
+}
+
+/* Utility classes */
+.text-vertical {
+  writing-mode: vertical-rl;
+}
+
+.decorative-line {
+  height: 1px;
+  background: linear-gradient(to right, transparent, #d4c5a9, #8b7d6b, #d4c5a9, transparent);
+}
+
+.hanging-indent {
+  text-indent: 2em;
+}
