@@ -1,0 +1,37 @@
+name: Deploy to Alibaba Cloud OSS
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+
+      - name: Setup Alibaba Cloud CLI
+        run: |
+          curl -sL https://aliyuncli.alicdn.com/aliyun-cli-linux-latest-amd64.tgz | tar xz
+          sudo mv aliyun /usr/local/bin/
+
+      - name: Configure credentials
+        run: |
+          aliyun configure set \
+            --profile default \
+            --mode AK \
+            --region ${{ secrets.ALIYUN_REGION }} \
+            --access-key-id ${{ secrets.ALIYUN_ACCESS_KEY_ID }} \
+            --access-key-secret ${{ secrets.ALIYUN_ACCESS_KEY_SECRET }}
+
+      - name: Upload to OSS
+        run: |
+          aliyun oss sync ./dist/ oss://${{ secrets.ALIYUN_BUCKET }}/ \
+            --delete \
+            --update
