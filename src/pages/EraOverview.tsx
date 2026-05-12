@@ -5,6 +5,7 @@ import { songOverview } from '../data/song'
 import { yuanOverview } from '../data/yuan'
 import { mingOverview } from '../data/ming'
 import { tangOverview } from '../data/tang'
+import { wudaiOverview } from '../data/wudai'
 import { MODULE_LABELS } from '../types/era'
 
 const eraOverviews: Record<string, typeof songOverview> = {
@@ -12,6 +13,7 @@ const eraOverviews: Record<string, typeof songOverview> = {
   yuan: yuanOverview,
   ming: mingOverview,
   tang: tangOverview,
+  wudai: wudaiOverview,
 }
 
 export default function EraOverview() {

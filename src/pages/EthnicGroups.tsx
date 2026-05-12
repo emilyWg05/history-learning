@@ -4,6 +4,7 @@ import { songEthnicGroups } from '../data/song'
 import { yuanEthnicGroups } from '../data/yuan'
 import { mingEthnicGroups } from '../data/ming'
 import { tangEthnicGroups } from '../data/tang'
+import { wudaiEthnicGroups } from '../data/wudai'
 import type { Article } from '../types/content'
 
 const eraArticles: Record<string, Article[]> = {
@@ -11,6 +12,7 @@ const eraArticles: Record<string, Article[]> = {
   yuan: yuanEthnicGroups,
   ming: mingEthnicGroups,
   tang: tangEthnicGroups,
+  wudai: wudaiEthnicGroups,
 }
 
 export default function EthnicGroups() {

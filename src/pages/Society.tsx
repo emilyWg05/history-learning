@@ -4,6 +4,7 @@ import { songSociety } from '../data/song'
 import { yuanSociety } from '../data/yuan'
 import { mingSociety } from '../data/ming'
 import { tangSociety } from '../data/tang'
+import { wudaiSociety } from '../data/wudai'
 import type { Article } from '../types/content'
 
 const eraArticles: Record<string, Article[]> = {
@@ -11,6 +12,7 @@ const eraArticles: Record<string, Article[]> = {
   yuan: yuanSociety,
   ming: mingSociety,
   tang: tangSociety,
+  wudai: wudaiSociety,
 }
 
 export default function Society() {

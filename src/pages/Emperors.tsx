@@ -5,6 +5,7 @@ import { songEmperors, songTimeline } from '../data/song'
 import { yuanEmperors, yuanTimeline } from '../data/yuan'
 import { mingEmperors, mingTimeline } from '../data/ming'
 import { tangEmperors, tangTimeline } from '../data/tang'
+import { wudaiEmperors, wudaiTimeline } from '../data/wudai'
 import { eras } from '../data/eras'
 import BookmarkButton from '../components/ui/BookmarkButton'
 import type { Emperor, TimelineEvent } from '../types/content'
@@ -14,6 +15,7 @@ const eraEmperors: Record<string, Emperor[]> = {
   yuan: yuanEmperors,
   ming: mingEmperors,
   tang: tangEmperors,
+  wudai: wudaiEmperors,
 }
 
 const eraTimelines: Record<string, TimelineEvent[]> = {
@@ -21,6 +23,7 @@ const eraTimelines: Record<string, TimelineEvent[]> = {
   yuan: yuanTimeline,
   ming: mingTimeline,
   tang: tangTimeline,
+  wudai: wudaiTimeline,
 }
 
 const categoryStyle: Record<string, string> = {
@@ -55,7 +58,7 @@ function EmperorTimelineCard({
       transition={{ delay: index * 0.03 }}
       className="relative pl-10"
     >
-      <div className="absolute left-0 top-[22px] w-2.5 h-2.5 rounded-full bg-ochre border-2 border-paper z-10 ring-2 ring-border/30 -translate-y-1/2" />
+      <div className="absolute left-0 top-[22px] w-2.5 h-2.5 rounded-full bg-ochre border-2 border-paper z-10 ring-2 ring-border/30 -translate-y-1/2 -translate-x-1/2" />
 
       <div className="bg-paper-light border border-border rounded-lg p-5 hover:shadow-md transition-shadow ml-4">
         <div className="flex items-start justify-between mb-3">

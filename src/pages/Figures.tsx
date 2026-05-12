@@ -5,6 +5,7 @@ import { songFigures } from '../data/song'
 import { yuanFigures } from '../data/yuan'
 import { mingFigures } from '../data/ming'
 import { tangFigures } from '../data/tang'
+import { wudaiFigures } from '../data/wudai'
 import FigureCard from '../components/ui/FigureCard'
 import BookmarkButton from '../components/ui/BookmarkButton'
 import FlashCardDeck from '../components/features/FlashCardDeck'
@@ -15,6 +16,7 @@ const eraFigures: Record<string, Figure[]> = {
   yuan: yuanFigures,
   ming: mingFigures,
   tang: tangFigures,
+  wudai: wudaiFigures,
 }
 
 const categories: { value: FigureCategory | 'all'; label: string }[] = [

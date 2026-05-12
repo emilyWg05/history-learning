@@ -4,6 +4,7 @@ import { songPolitics } from '../data/song'
 import { yuanPolitics } from '../data/yuan'
 import { mingPolitics } from '../data/ming'
 import { tangPolitics } from '../data/tang'
+import { wudaiPolitics } from '../data/wudai'
 import type { Article } from '../types/content'
 
 const eraArticles: Record<string, Article[]> = {
@@ -11,6 +12,7 @@ const eraArticles: Record<string, Article[]> = {
   yuan: yuanPolitics,
   ming: mingPolitics,
   tang: tangPolitics,
+  wudai: wudaiPolitics,
 }
 
 export default function Politics() {

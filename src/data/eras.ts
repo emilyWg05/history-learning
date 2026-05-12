@@ -30,6 +30,19 @@ export const eras: Era[] = [
     modules: [...defaultModules],
   },
   {
+    id: 'wudai',
+    name: '五代十国',
+    category: 'chinese',
+    periods: [
+      { id: 'wudai-dynasties', name: '五代更迭', startYear: 907, endYear: 960 },
+      { id: 'ten-kingdoms', name: '十国割据', startYear: 902, endYear: 979 },
+    ],
+    startYear: 907,
+    endYear: 979,
+    overview: '五代十国（907年—979年）是唐末藩镇割据的延续，上承大唐下启赵宋。中原先后经历后梁、后唐、后晋、后汉、后周五个短命王朝；南方和山西地区出现十个割据政权。这是分裂与融合的时代，门阀士族终结，经济重心南移，词文学成熟，为宋代繁荣奠定基础。',
+    modules: [...defaultModules],
+  },
+  {
     id: 'song',
     name: '宋朝',
     category: 'chinese',

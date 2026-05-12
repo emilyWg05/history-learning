@@ -5,6 +5,7 @@ import { songTimeline } from '../data/song'
 import { yuanTimeline } from '../data/yuan'
 import { mingTimeline } from '../data/ming'
 import { tangTimeline } from '../data/tang'
+import { wudaiTimeline } from '../data/wudai'
 import TimelineComponent from '../components/ui/Timeline'
 import type { TimelineEvent } from '../types/content'
 
@@ -13,6 +14,7 @@ const eraTimelines: Record<string, TimelineEvent[]> = {
   yuan: yuanTimeline,
   ming: mingTimeline,
   tang: tangTimeline,
+  wudai: wudaiTimeline,
 }
 
 export default function Timeline() {

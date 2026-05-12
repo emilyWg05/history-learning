@@ -4,6 +4,7 @@ import { songCulture } from '../data/song'
 import { yuanCulture } from '../data/yuan'
 import { mingCulture } from '../data/ming'
 import { tangCulture } from '../data/tang'
+import { wudaiCulture } from '../data/wudai'
 import type { Article } from '../types/content'
 
 const eraArticles: Record<string, Article[]> = {
@@ -11,6 +12,7 @@ const eraArticles: Record<string, Article[]> = {
   yuan: yuanCulture,
   ming: mingCulture,
   tang: tangCulture,
+  wudai: wudaiCulture,
 }
 
 export default function Culture() {

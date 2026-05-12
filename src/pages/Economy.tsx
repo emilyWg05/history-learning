@@ -4,6 +4,7 @@ import { songEconomy } from '../data/song'
 import { yuanEconomy } from '../data/yuan'
 import { mingEconomy } from '../data/ming'
 import { tangEconomy } from '../data/tang'
+import { wudaiEconomy } from '../data/wudai'
 import type { Article } from '../types/content'
 
 const eraArticles: Record<string, Article[]> = {
@@ -11,6 +12,7 @@ const eraArticles: Record<string, Article[]> = {
   yuan: yuanEconomy,
   ming: mingEconomy,
   tang: tangEconomy,
+  wudai: wudaiEconomy,
 }
 
 export default function Economy() {
