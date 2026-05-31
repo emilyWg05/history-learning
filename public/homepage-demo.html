@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="scroll-smooth">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>史鉴 — 人类文明探索平台</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=LXGW+WenKai:wght@400;700&family=Noto+Sans+SC:wght@400;500&family=Noto+Serif+SC:wght@400;500;600;700;900&family=Ma+Shan+Zheng&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        paper: '#f5f0e8', 'paper-light': '#faf7f0', ink: '#3d3226',
+        'ink-muted': '#6b5d4b', ochre: '#8b4513', seal: '#c41e3a',
+        border: '#d4c5a9', gold: '#b8963e', jade: '#7fa08b',
+        silk: '#e8dcc8', 'ink-wash': '#9b8c7c', world: '#2c5f7c',
+      },
+      fontFamily: {
+        heading: ['"LXGW WenKai"', '"Noto Serif SC"', '"Source Han Serif SC"', 'serif'],
+        body: ['"Noto Serif SC"', 'serif'],
+        calligraphy: ['"Ma Shan Zheng"', 'cursive'],
+        'body-sans': ['"Noto Sans SC"', '"Source Han Sans SC"', 'sans-serif'],
+      },
+    }
+  }
+}
+</script>
+<style>
+  html { scroll-behavior: smooth; }
+  body { background-color: #f5f0e8; color: #3d3226; font-family: 'Noto Serif SC', serif; line-height: 1.8; }
+  body::before {
+    content: ""; position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg width='400' height='400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    background-repeat: repeat; opacity: 0.6;
+  }
+  .decorative-line { height: 1px; background: linear-gradient(to right, transparent, #d4c5a9, #6b5d4b, #d4c5a9, transparent); }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { opacity: 1 !important; transform: none !important; }
+    .scroll-indicator { display: none; }
+  }
+  .reveal {
+    opacity: 0; transform: translateY(40px);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.35s; }
+  .reveal-delay-4 { transition-delay: 0.5s; }
+  .seal-stamp {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 56px; height: 56px; border: 2px solid #c41e3a; border-radius: 8px;
+    color: #c41e3a; font-family: 'Ma Shan Zheng', cursive; font-size: 28px;
+    transform: rotate(-4deg); user-select: none; flex-shrink: 0;
+  }
+  .scroll-indicator { animation: float 2s ease-in-out infinite; }
+  @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(8px); } }
+  .section-pill {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    padding: 0.25rem 1rem; border-radius: 9999px;
+    font-size: 0.75rem; font-weight: 500; letter-spacing: 0.1em;
+  }
+  ::-webkit-scrollbar { width: 8px; height: 6px; }
+  ::-webkit-scrollbar-track { background: #f5f0e8; }
+  ::-webkit-scrollbar-thumb { background: #d4c5a9; border-radius: 4px; }
+  ::-webkit-scrollbar-thumb:hover { background: #9b8c7c; }
+  ::selection { background-color: #d4c5a9; color: #3d3226; }
+  .focus-ring:focus-visible { outline: 2px solid #8b4513; outline-offset: 2px; border-radius: 4px; }
+
+  /* ====== Dynasty Browser ====== */
+  .scroll-stage {
+    position: relative;
+    padding: 3rem 0 1.5rem;
+    overflow: visible;
+  }
+
+  .scroll-line {
+    position: relative;
+    height: 1px;
+    background: #d4c5a9;
+    min-width: 100%;
+  }
+
+  /* dots container — overlaid on the line */
+  .scroll-dots {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    min-width: max(100%, 640px);
+    padding: 0 1rem;
+  }
+  .scroll-dot {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.35rem;
+    cursor: pointer;
+    transition: transform 0.25s ease;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 2;
+    padding: 0 0.5rem;
+  }
+  .scroll-dot:hover { transform: scale(1.08); }
+
+  .dot-circle {
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'LXGW WenKai', 'Noto Serif SC', serif;
+    font-weight: 700; font-size: 1rem;
+    color: #fff;
+    border: 3px solid #f5f0e8;
+    box-shadow: 0 0 0 0 transparent, 0 1px 3px rgba(0,0,0,0.12);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    flex-shrink: 0;
+  }
+  .scroll-dot.active .dot-circle,
+  .scroll-dot:hover .dot-circle {
+    width: 48px; height: 48px;
+    font-size: 1.25rem;
+    box-shadow: 0 0 0 8px rgba(139,69,19,0.08), 0 2px 6px rgba(0,0,0,0.15);
+  }
+
+  .dc-ochre .dot-circle { background: #8b4513; }
+  .dc-wash  .dot-circle { background: #9b8c7c; }
+  .dc-jade  .dot-circle { background: #7fa08b; }
+  .dc-gold  .dot-circle { background: #b8963e; }
+  .dc-seal  .dot-circle { background: #c41e3a; }
+
+  .dot-label {
+    font-family: 'LXGW WenKai', 'Noto Serif SC', serif;
+    font-size: 0.75rem; font-weight: 700;
+    color: #6b5d4b; white-space: nowrap;
+    transition: color 0.3s ease;
+  }
+  .scroll-dot.active .dot-label,
+  .scroll-dot:hover .dot-label { color: #3d3226; }
+
+  .dot-year {
+    font-size: 0.6rem; color: rgba(107,93,75,0.4);
+    white-space: nowrap; transition: color 0.3s ease;
+  }
+  .scroll-dot.active .dot-year,
+  .scroll-dot:hover .dot-year { color: rgba(107,93,75,0.65); }
+
+  /* detail panel */
+  .dynasty-showcase {
+    max-width: 720px;
+    margin: 2.5rem auto 0;
+    position: relative;
+    min-height: 260px;
+  }
+  .dynasty-pane {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transform: translateY(10px);
+    pointer-events: none;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+  .dynasty-pane.active {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+    position: relative;
+  }
+
+  .pane-name {
+    font-family: 'LXGW WenKai', 'Noto Serif SC', 'Source Han Serif SC', serif;
+    font-weight: 900;
+    font-size: clamp(2rem, 4vw, 2.75rem);
+    color: #3d3226;
+    margin-bottom: 0.2rem;
+    text-align: center;
+  }
+  .pane-meta {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.5rem 1rem;
+    margin-bottom: 0.375rem;
+    font-size: 0.85rem;
+    color: #6b5d4b;
+  }
+  .pane-years {
+    font-weight: 500;
+    letter-spacing: 0.08em;
+  }
+  .pane-desc {
+    max-width: 672px;
+    margin: 0 auto 1rem;
+    font-size: 0.85rem;
+    line-height: 1.7;
+    color: #6b5d4b;
+    font-family: 'Noto Sans SC', 'Source Han Sans SC', sans-serif;
+  }
+  .pane-tags {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.375rem;
+    margin-bottom: 1.25rem;
+    font-family: 'Noto Sans SC', 'Source Han Sans SC', sans-serif;
+  }
+
+  .pane-card {
+    background-color: #faf7f0;
+    border: 1px solid rgba(212,197,169,0.5);
+    border-radius: 0.5rem;
+    padding: 0.75rem;
+    font-size: 0.75rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: left;
+    font-family: 'Noto Sans SC', 'Source Han Sans SC', sans-serif;
+  }
+  .pane-card:hover { border-color: rgba(139,69,19,0.2); }
+
+  @media (max-width: 639px) {
+    .dot-circle { width: 30px; height: 30px; font-size: 0.8rem; }
+    .scroll-dot.active .dot-circle,
+    .scroll-dot:hover .dot-circle { width: 38px; height: 38px; font-size: 1rem; }
+    .dynasty-showcase { margin-top: 0.5rem; min-height: 280px; }
+  }
+
+  /* world & module cards */
+  .world-card {
+    background: linear-gradient(135deg, rgba(44,95,124,0.04) 0%, rgba(44,95,124,0.01) 100%);
+    border: 1px dashed rgba(44,95,124,0.25);
+    border-radius: 1rem; padding: 1.5rem; text-align: center;
+    cursor: pointer; transition: all 0.3s ease;
+  }
+  .world-card:hover {
+    border-color: rgba(44,95,124,0.5);
+    background: linear-gradient(135deg, rgba(44,95,124,0.08) 0%, rgba(44,95,124,0.03) 100%);
+    box-shadow: 0 4px 24px rgba(44,95,124,0.08); transform: translateY(-2px);
+  }
+  .china-divider { height: 2px; border: none; background: linear-gradient(to right, transparent, #c41e3a33, #c41e3a66, #c41e3a33, transparent); margin: 0 auto; }
+  .world-divider { height: 2px; border: none; background: linear-gradient(to right, transparent, #2c5f7c33, #2c5f7c66, #2c5f7c33, transparent); margin: 0 auto; }
+  .module-card {
+    background-color: #faf7f0; border: 1px solid rgba(212,197,169,0.5);
+    border-radius: 0.75rem; padding: 1.25rem; text-align: center;
+    cursor: pointer; transition: all 0.25s ease;
+  }
+  .module-card:hover { border-color: rgba(139,69,19,0.3); box-shadow: 0 2px 16px rgba(139,69,19,0.06); }
+</style>
+</head>
+<body class="relative min-h-screen font-body">
+
+<!-- ====== NAVBAR ====== -->
+<nav class="sticky top-0 z-50 border-b border-border/50 bg-paper/90 backdrop-blur-sm" role="navigation" aria-label="主导航">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 flex items-center justify-between py-3">
+    <a href="#" class="font-heading text-xl sm:text-2xl font-bold text-ink tracking-wide hover:text-ochre transition-colors" aria-label="史鉴首页">史鉴</a>
+    <div class="flex items-center gap-4 sm:gap-6 text-sm">
+      <a href="#" class="text-ink-muted hover:text-seal transition-colors hidden sm:inline">问答</a>
+      <a href="#" class="text-ink-muted hover:text-seal transition-colors">复习清单</a>
+      <button class="px-4 py-1.5 bg-seal text-paper-light text-sm rounded hover:bg-seal/85 transition-colors focus-ring">开始探索</button>
+    </div>
+  </div>
+</nav>
+
+<!-- ====== HERO ====== -->
+<section class="relative z-10 flex flex-col items-center justify-center min-h-[calc(100vh-64px)] px-4 text-center" aria-label="欢迎区域">
+  <div class="seal-stamp mb-6 reveal">鉴</div>
+  <h1 class="font-heading text-5xl sm:text-7xl font-black text-ink mb-4 tracking-widest reveal reveal-delay-1">史鉴</h1>
+  <p class="text-ink-muted text-lg sm:text-2xl max-w-2xl leading-relaxed reveal reveal-delay-2" style="text-wrap:balance">以史为鉴，可以知兴替</p>
+  <p class="text-ink-muted/60 text-sm sm:text-base mt-3 max-w-xl reveal reveal-delay-2" style="text-wrap:balance">纵横东西，以时间为轴，以事件为纬，走进人类文明的每一个重要瞬间</p>
+  <div class="decorative-line w-48 sm:w-64 mx-auto mt-8 reveal reveal-delay-3"></div>
+  <div class="flex flex-col sm:flex-row gap-3 mt-8 reveal reveal-delay-3">
+    <a href="#china" class="cursor-pointer px-6 py-2.5 bg-seal text-paper-light rounded-lg text-sm font-medium hover:bg-seal/85 transition-colors focus-ring">探索中国史</a>
+    <a href="#world" class="cursor-pointer px-6 py-2.5 bg-world text-paper-light rounded-lg text-sm font-medium hover:bg-world/85 transition-colors focus-ring">探索世界史</a>
+  </div>
+  <div class="scroll-indicator mt-16 text-ink-muted/20" aria-hidden="true">
+    <svg class="w-5 h-5 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/></svg>
+    <span class="text-xs mt-1 block">向下滚动</span>
+  </div>
+</section>
+
+<!-- ====== 中国史 — 画卷巡览 ====== -->
+<section id="china" class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 pt-24 pb-12" aria-label="中国史">
+
+  <div class="text-center mb-8 reveal">
+    <span class="section-pill bg-seal/8 text-seal border border-seal/15">CHINA · 中国史</span>
+    <h2 class="font-heading text-3xl sm:text-4xl font-bold text-ink mt-4 mb-3">帝国与王朝</h2>
+    <p class="text-ink-muted max-w-lg mx-auto text-sm">悬停朝代节点即览详情，画卷延展，一朝一页</p>
+  </div>
+
+  <!-- 朝代时间轴 -->
+  <div class="scroll-stage reveal">
+    <div class="scroll-line">
+      <div class="scroll-dots">
+        <div class="scroll-dot dc-ochre active" data-dynasty="tang" tabindex="0" role="button" aria-label="唐朝 618-907">
+          <div class="dot-circle">唐</div>
+          <span class="dot-label">唐朝</span>
+          <span class="dot-year">618-907</span>
+        </div>
+        <div class="scroll-dot dc-wash" data-dynasty="wudai" tabindex="0" role="button" aria-label="五代十国 907-979">
+          <div class="dot-circle">代</div>
+          <span class="dot-label">五代十国</span>
+          <span class="dot-year">907-979</span>
+        </div>
+        <div class="scroll-dot dc-jade" data-dynasty="song" tabindex="0" role="button" aria-label="宋朝 960-1279">
+          <div class="dot-circle">宋</div>
+          <span class="dot-label">宋朝</span>
+          <span class="dot-year">960-1279</span>
+        </div>
+        <div class="scroll-dot dc-gold" data-dynasty="yuan" tabindex="0" role="button" aria-label="元朝 1271-1368">
+          <div class="dot-circle">元</div>
+          <span class="dot-label">元朝</span>
+          <span class="dot-year">1271-1368</span>
+        </div>
+        <div class="scroll-dot dc-seal" data-dynasty="ming" tabindex="0" role="button" aria-label="明朝 1368-1644">
+          <div class="dot-circle">明</div>
+          <span class="dot-label">明朝</span>
+          <span class="dot-year">1368-1644</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 详情面板 -->
+  <div class="dynasty-showcase reveal reveal-delay-1">
+
+    <div class="dynasty-pane active" id="pane-tang">
+      <div class="pane-name">唐朝</div>
+      <div class="pane-meta">
+        <span class="pane-years text-ochre">618 - 907</span>
+        <span>·</span>
+        <span>帝国盛世</span>
+      </div>
+      <div class="pane-tags">
+        <span class="font-body-sans text-xs bg-ochre/5 border border-ochre/15 text-ochre px-2 py-0.5 rounded">初唐</span>
+        <span class="font-body-sans text-xs bg-ochre/5 border border-ochre/15 text-ochre px-2 py-0.5 rounded">盛唐</span>
+        <span class="font-body-sans text-xs bg-ochre/5 border border-ochre/15 text-ochre px-2 py-0.5 rounded">中唐</span>
+        <span class="font-body-sans text-xs bg-ochre/5 border border-ochre/15 text-ochre px-2 py-0.5 rounded">晚唐</span>
+      </div>
+      <p class="pane-desc font-body-sans">中国历史上最强盛的王朝之一。贞观之治、开元盛世，诗坛群星璀璨，丝绸之路空前繁荣。</p>
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 max-w-2xl mx-auto">
+        <div class="pane-card font-body-sans"><span class="block text-ochre font-medium mb-1">贞观之治</span><span class="text-ink-muted">太宗李世民开创</span></div>
+        <div class="pane-card font-body-sans"><span class="block text-ochre font-medium mb-1">开元盛世</span><span class="text-ink-muted">玄宗李隆基鼎盛</span></div>
+        <div class="pane-card font-body-sans"><span class="block text-ochre font-medium mb-1">唐诗璀璨</span><span class="text-ink-muted">李白杜甫白居易</span></div>
+        <div class="pane-card font-body-sans"><span class="block text-ochre font-medium mb-1">丝绸之路</span><span class="text-ink-muted">连接东西方文明</span></div>
+      </div>
+    </div>
+
+    <div class="dynasty-pane" id="pane-wudai">
+      <div class="pane-name">五代十国</div>
+      <div class="pane-meta">
+        <span class="pane-years text-ink-wash">907 - 979</span>
+        <span>·</span>
+        <span>群雄并起</span>
+      </div>
+      <div class="pane-tags">
+        <span class="text-xs bg-ink-wash/5 border border-ink-wash/15 text-ink-wash px-2 py-0.5 rounded">五代更迭</span>
+        <span class="text-xs bg-ink-wash/5 border border-ink-wash/15 text-ink-wash px-2 py-0.5 rounded">十国割据</span>
+      </div>
+      <p class="pane-desc">唐末藩镇割据的延续，上承大唐下启赵宋。门阀士族终结，经济重心南移，词文学成熟。</p>
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 max-w-2xl mx-auto">
+        <div class="pane-card"><span class="block text-ink-wash font-medium mb-1">五代更迭</span><span class="text-ink-muted">梁唐晋汉周五十四年</span></div>
+        <div class="pane-card"><span class="block text-ink-wash font-medium mb-1">词学成熟</span><span class="text-ink-muted">花间集与南唐词派</span></div>
+        <div class="pane-card"><span class="block text-ink-wash font-medium mb-1">经济南移</span><span class="text-ink-muted">南方经济超越北方</span></div>
+        <div class="pane-card"><span class="block text-ink-wash font-medium mb-1">门阀终结</span><span class="text-ink-muted">士族政治让位于科举</span></div>
+      </div>
+    </div>
+
+    <div class="dynasty-pane" id="pane-song">
+      <div class="pane-name">宋朝</div>
+      <div class="pane-meta">
+        <span class="pane-years text-jade">960 - 1279</span>
+        <span>·</span>
+        <span>文治巅峰</span>
+      </div>
+      <div class="pane-tags">
+        <span class="text-xs bg-jade/5 border border-jade/15 text-jade px-2 py-0.5 rounded">北宋</span>
+        <span class="text-xs bg-jade/5 border border-jade/15 text-jade px-2 py-0.5 rounded">南宋</span>
+      </div>
+      <p class="pane-desc">中国经济、文化、科技的黄金时代。商品经济发达，市民文化兴起，科技水平领先世界。</p>
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 max-w-2xl mx-auto">
+        <div class="pane-card"><span class="block text-jade font-medium mb-1">经济繁荣</span><span class="text-ink-muted">商品经济高度发展</span></div>
+        <div class="pane-card"><span class="block text-jade font-medium mb-1">科技发明</span><span class="text-ink-muted">活字印刷指南针</span></div>
+        <div class="pane-card"><span class="block text-jade font-medium mb-1">宋词风雅</span><span class="text-ink-muted">苏轼辛弃疾李清照</span></div>
+        <div class="pane-card"><span class="block text-jade font-medium mb-1">文艺复兴</span><span class="text-ink-muted">理学思想与绘画</span></div>
+      </div>
+    </div>
+
+    <div class="dynasty-pane" id="pane-yuan">
+      <div class="pane-name">元朝</div>
+      <div class="pane-meta">
+        <span class="pane-years text-gold">1271 - 1368</span>
+        <span>·</span>
+        <span>大哉乾元</span>
+      </div>
+      <div class="pane-tags">
+        <span class="text-xs bg-gold/5 border border-gold/15 text-gold px-2 py-0.5 rounded">大蒙古国</span>
+        <span class="text-xs bg-gold/5 border border-gold/15 text-gold px-2 py-0.5 rounded">元朝</span>
+      </div>
+      <p class="pane-desc">第一个少数民族大一统王朝，疆域空前辽阔，中西交流频繁，戏曲天文学成就卓著。</p>
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 max-w-2xl mx-auto">
+        <div class="pane-card"><span class="block text-gold font-medium mb-1">大都建城</span><span class="text-ink-muted">北京城营建之始</span></div>
+        <div class="pane-card"><span class="block text-gold font-medium mb-1">元曲兴盛</span><span class="text-ink-muted">关汉卿与《窦娥冤》</span></div>
+        <div class="pane-card"><span class="block text-gold font-medium mb-1">马可波罗</span><span class="text-ink-muted">东西方文化交流</span></div>
+        <div class="pane-card"><span class="block text-gold font-medium mb-1">天文成就</span><span class="text-ink-muted">郭守敬与《授时历》</span></div>
+      </div>
+    </div>
+
+    <div class="dynasty-pane" id="pane-ming">
+      <div class="pane-name">明朝</div>
+      <div class="pane-meta">
+        <span class="pane-years text-seal">1368 - 1644</span>
+        <span>·</span>
+        <span>风华绝代</span>
+      </div>
+      <div class="pane-tags">
+        <span class="text-xs bg-seal/5 border border-seal/15 text-seal px-2 py-0.5 rounded">明初</span>
+        <span class="text-xs bg-seal/5 border border-seal/15 text-seal px-2 py-0.5 rounded">明中</span>
+        <span class="text-xs bg-seal/5 border border-seal/15 text-seal px-2 py-0.5 rounded">明末</span>
+      </div>
+      <p class="pane-desc">最后一个汉族大一统王朝。商品经济繁荣，资本主义萌芽，郑和七下西洋，文化艺术璀璨。</p>
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 max-w-2xl mx-auto">
+        <div class="pane-card"><span class="block text-seal font-medium mb-1">驱逐蒙元</span><span class="text-ink-muted">朱元璋恢复中华</span></div>
+        <div class="pane-card"><span class="block text-seal font-medium mb-1">永乐盛世</span><span class="text-ink-muted">朱棣迁都北京</span></div>
+        <div class="pane-card"><span class="block text-seal font-medium mb-1">郑和下西洋</span><span class="text-ink-muted">航海壮举远播国威</span></div>
+        <div class="pane-card"><span class="block text-seal font-medium mb-1">四大名著</span><span class="text-ink-muted">小说创作的巅峰</span></div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="reveal text-center mt-6">
+    <p class="text-xs text-ink-muted/30">更多朝代持续收录中 · 画卷徐徐展开</p>
+  </div>
+
+</section>
+
+<!-- Transition -->
+<div class="relative z-10 max-w-xs mx-auto px-4 py-8 reveal"><hr class="china-divider w-48 mx-auto"></div>
+
+<!-- ====== 世界史 ====== -->
+<section id="world" class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 pt-12 pb-24" aria-label="世界史">
+  <div class="text-center mb-20 reveal">
+    <span class="section-pill bg-world/8 text-world border border-world/15">WORLD · 世界史</span>
+    <h2 class="font-heading text-3xl sm:text-4xl font-bold text-ink mt-4 mb-3">世界文明的脚步</h2>
+    <p class="text-ink-muted max-w-lg mx-auto text-sm">从古典到近代，跨越大陆与海洋，追溯全球文明进程中的重要篇章</p>
+  </div>
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+    <div class="reveal reveal-delay-1 world-card"><div class="w-14 h-14 mx-auto mb-4 rounded-full bg-world/8 flex items-center justify-center text-world"><svg class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582"/></svg></div><h3 class="font-heading text-lg font-bold text-ink mb-2">古典文明</h3><p class="text-xs text-ink-muted/70 leading-relaxed mb-4">古希腊城邦、罗马帝国、波斯王朝、印度孔雀帝国</p><span class="inline-block text-xs text-world/50 border border-world/15 rounded-full px-3 py-1">即将开放</span></div>
+    <div class="reveal reveal-delay-2 world-card"><div class="w-14 h-14 mx-auto mb-4 rounded-full bg-world/8 flex items-center justify-center text-world"><svg class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h1.5m-1.5 3h1.5m-1.5 3h1.5m3-6H15m-1.5 3H15m-1.5 3H15"/></svg></div><h3 class="font-heading text-lg font-bold text-ink mb-2">中世纪</h3><p class="text-xs text-ink-muted/70 leading-relaxed mb-4">拜占庭帝国、伊斯兰黄金时代、欧洲封建制度、十字军东征</p><span class="inline-block text-xs text-world/50 border border-world/15 rounded-full px-3 py-1">即将开放</span></div>
+    <div class="reveal reveal-delay-3 world-card"><div class="w-14 h-14 mx-auto mb-4 rounded-full bg-world/8 flex items-center justify-center text-world"><svg class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.455 2.456L21.75 6l-1.036.259a3.375 3.375 0 00-2.455 2.456z"/></svg></div><h3 class="font-heading text-lg font-bold text-ink mb-2">大航海时代</h3><p class="text-xs text-ink-muted/70 leading-relaxed mb-4">文艺复兴、地理大发现、殖民扩张、全球贸易网络形成</p><span class="inline-block text-xs text-world/50 border border-world/15 rounded-full px-3 py-1">即将开放</span></div>
+    <div class="reveal reveal-delay-4 world-card"><div class="w-14 h-14 mx-auto mb-4 rounded-full bg-world/8 flex items-center justify-center text-world"><svg class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z"/></svg></div><h3 class="font-heading text-lg font-bold text-ink mb-2">近代革命</h3><p class="text-xs text-ink-muted/70 leading-relaxed mb-4">工业革命、启蒙运动、美国独立、法国大革命、民族国家兴起</p><span class="inline-block text-xs text-world/50 border border-world/15 rounded-full px-3 py-1">即将开放</span></div>
+  </div>
+  <div class="reveal text-center mt-12"><p class="text-xs text-ink-muted/40">更多时代内容持续收录中</p></div>
+</section>
+
+<hr class="world-divider w-64 mx-auto reveal">
+
+<!-- ====== MODULE GRID ====== -->
+<section id="modules" class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 py-24" aria-label="学习模块">
+  <div class="text-center mb-16 reveal">
+    <span class="section-pill bg-ochre/8 text-ochre border border-ochre/15">MODULES</span>
+    <h2 class="font-heading text-3xl sm:text-4xl font-bold text-ink mt-4 mb-3">十大学习模块</h2>
+    <p class="text-ink-muted max-w-md mx-auto text-sm">每个朝代从十个维度切入，建立立体的历史认知</p>
+  </div>
+  <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4">
+    <div class="reveal reveal-delay-1 module-card"><div class="w-10 h-10 mx-auto mb-3 rounded-lg bg-ochre/10 flex items-center justify-center text-ochre"><svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"/></svg></div><h3 class="font-heading text-sm font-semibold text-ink mb-1">君主图鉴</h3><p class="text-xs text-ink-muted/60">历代帝王生平事迹</p></div>
+    <div class="reveal reveal-delay-1 module-card"><div class="w-10 h-10 mx-auto mb-3 rounded-lg bg-ochre/10 flex items-center justify-center text-ochre"><svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div><h3 class="font-heading text-sm font-semibold text-ink mb-1">大事年表</h3><p class="text-xs text-ink-muted/60">编年史时间线</p></div>
+    <div class="reveal reveal-delay-2 module-card"><div class="w-10 h-10 mx-auto mb-3 rounded-lg bg-jade/10 flex items-center justify-center text-jade"><svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582"/></svg></div><h3 class="font-heading text-sm font-semibold text-ink mb-1">政治</h3><p class="text-xs text-ink-muted/60">制度与政局变迁</p></div>
+    <div class="reveal reveal-delay-2 module-card"><div class="w-10 h-10 mx-auto mb-3 rounded-lg bg-gold/10 flex items-center justify-center text-gold"><svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div><h3 class="font-heading text-sm font-semibold text-ink mb-1">经济</h3><p class="text-xs text-ink-muted/60">农业商业与财政</p></div>
+    <div class="reveal reveal-delay-3 module-card"><div class="w-10 h-10 mx-auto mb-3 rounded-lg bg-seal/10 flex items-center justify-center text-seal"><svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.53 16.122a3 3 0 00-5.78 1.128 2.25 2.25 0 01-2.4 2.245 4.5 4.5 0 008.4-2.245c0-.399-.078-.78-.22-1.128zm0 0a15.998 15.998 0 003.388-1.62m-5.043-.025a15.994 15.994 0 011.622-3.395m3.42 3.42a15.995 15.995 0 004.764-4.648l3.876-5.814a1.151 1.151 0 00-1.597-1.597L14.146 6.32a15.996 15.996 0 00-4.649 4.763m3.42 3.42a6.776 6.776 0 00-3.42-3.42"/></svg></div><h3 class="font-heading text-sm font-semibold text-ink mb-1">军事</h3><p class="text-xs text-ink-muted/60">战争与国防体系</p></div>
+    <div class="reveal reveal-delay-1 module-card"><div class="w-10 h-10 mx-auto mb-3 rounded-lg bg-ink-wash/10 flex items-center justify-center text-ink-wash"><svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 01.865-.501 48.172 48.172 0 003.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z"/></svg></div><h3 class="font-heading text-sm font-semibold text-ink mb-1">文化</h3><p class="text-xs text-ink-muted/60">文学艺术与思想</p></div>
+    <div class="reveal reveal-delay-2 module-card"><div class="w-10 h-10 mx-auto mb-3 rounded-lg bg-jade/10 flex items-center justify-center text-jade"><svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12.75 3.03v.568c0 .334.148.65.405.864l1.068.89c.442.369.535 1.01.216 1.49l-.51.766a2.25 2.25 0 01-1.161.886l-.143.048a1.107 1.107 0 00-.57 1.664c.369.555.169 1.307-.427 1.605L9 13.125l.423 1.059a.956.956 0 01-1.652.928l-.679-.906a1.125 1.125 0 00-1.906.172L4.5 15.75l-.612.153M12.75 3.031a9 9 0 00-8.862 12.872M12.75 3.031a9 9 0 016.69 14.036m0 0l-.177-.529A2.25 2.25 0 0017.128 15H16.5l-.324-.324a1.453 1.453 0 00-2.328.377l-.036.073a1.586 1.586 0 01-.982.816l-.99.282c-.55.157-.894.702-.8 1.267l.073.438c.08.474.49.821.97.821.846 0 1.598.542 1.865 1.345l.215.643m5.276-3.67a9.012 9.012 0 01-5.276 3.67m0 0a9 9 0 01-10.14-3.083M5.404 14.846H3.75"/></svg></div><h3 class="font-heading text-sm font-semibold text-ink mb-1">外交</h3><p class="text-xs text-ink-muted/60">对外关系与交流</p></div>
+    <div class="reveal reveal-delay-3 module-card"><div class="w-10 h-10 mx-auto mb-3 rounded-lg bg-ochre/10 flex items-center justify-center text-ochre"><svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z"/></svg></div><h3 class="font-heading text-sm font-semibold text-ink mb-1">社会</h3><p class="text-xs text-ink-muted/60">阶层与日常生活</p></div>
+    <div class="reveal reveal-delay-4 module-card"><div class="w-10 h-10 mx-auto mb-3 rounded-lg bg-gold/10 flex items-center justify-center text-gold"><svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z"/></svg></div><h3 class="font-heading text-sm font-semibold text-ink mb-1">人物志</h3><p class="text-xs text-ink-muted/60">历史人物列传</p></div>
+    <div class="reveal reveal-delay-4 module-card"><div class="w-10 h-10 mx-auto mb-3 rounded-lg bg-seal/10 flex items-center justify-center text-seal"><svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25zM6.75 12h.008v.008H6.75V12zm0 3h.008v.008H6.75V15zm0 3h.008v.008H6.75V18z"/></svg></div><h3 class="font-heading text-sm font-semibold text-ink mb-1">民族</h3><p class="text-xs text-ink-muted/60">族群关系与文化融合</p></div>
+  </div>
+</section>
+
+<!-- ====== CTA ====== -->
+<section class="relative z-10 max-w-3xl mx-auto px-4 sm:px-6 py-12 text-center reveal" aria-label="行动号召">
+  <div class="bg-paper-light border border-border rounded-2xl p-8 sm:p-12">
+    <div class="seal-stamp mb-4 mx-auto" style="width:48px;height:48px;font-size:22px;">史</div>
+    <h2 class="font-heading text-2xl sm:text-3xl font-bold text-ink mb-3">开始你的历史探索之旅</h2>
+    <p class="text-ink-muted max-w-md mx-auto mb-8 text-sm leading-relaxed">从唐风宋韵到大航海时代，横跨东西方文明。AI 问答助你解惑，复习清单巩固所学。</p>
+    <div class="flex flex-col sm:flex-row gap-3 justify-center">
+      <button class="cursor-pointer px-8 py-3 bg-seal text-paper-light rounded-lg text-sm font-medium hover:bg-seal/85 transition-colors focus-ring">探索中国史</button>
+      <button class="cursor-pointer px-8 py-3 bg-world text-paper-light rounded-lg text-sm font-medium hover:bg-world/85 transition-colors focus-ring">探索世界史</button>
+    </div>
+  </div>
+</section>
+
+<!-- ====== FOOTER ====== -->
+<footer class="relative z-10 border-t border-border/50 py-8 text-center" role="contentinfo">
+  <p class="text-xs text-ink-muted/40">史鉴 · 人类文明探索平台 · 东西方历史持续收录中</p>
+</footer>
+
+<script>
+(function() {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
+  }
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    },
+    { threshold: 0.15, rootMargin: '0px 0px -40px 0px' }
+  );
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // hover to switch + click fallback for touch
+  const dots = document.querySelectorAll('.scroll-dot');
+  const panes = document.querySelectorAll('.dynasty-pane');
+  let isTouch = false;
+
+  function activateDynasty(target) {
+    dots.forEach(d => d.classList.remove('active'));
+    panes.forEach(p => p.classList.remove('active'));
+    const dot = document.querySelector('.scroll-dot[data-dynasty="' + target + '"]');
+    const pane = document.getElementById('pane-' + target);
+    if (dot) dot.classList.add('active');
+    if (pane) pane.classList.add('active');
+  }
+
+  dots.forEach(dot => {
+    dot.addEventListener('mouseenter', () => {
+      if (isTouch) return;
+      activateDynasty(dot.dataset.dynasty);
+    });
+    dot.addEventListener('click', () => {
+      isTouch = true;
+      activateDynasty(dot.dataset.dynasty);
+    });
+    dot.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        activateDynasty(dot.dataset.dynasty);
+      }
+    });
+  });
+
+  // reset touch flag on mouse move (user switched back to mouse)
+  document.addEventListener('mousemove', () => { isTouch = false; });
+})();
+</script>
+</body>
+</html>
