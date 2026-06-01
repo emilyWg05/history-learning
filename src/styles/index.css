@@ -152,7 +152,7 @@ body::before {
 .scroll-stage {
   position: relative;
   padding: 3rem 0 1.5rem;
-  overflow: visible;
+  overflow-x: clip;
 }
 
 .scroll-line {
