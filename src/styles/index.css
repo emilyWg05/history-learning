@@ -151,8 +151,13 @@ body::before {
 /* ====== Dynasty Browser ====== */
 .scroll-stage {
   position: relative;
-  padding: 3rem 0 1.5rem;
-  overflow-x: clip;
+  padding: 4rem 0 3rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.scroll-stage::-webkit-scrollbar {
+  display: none;
 }
 
 .scroll-line {
