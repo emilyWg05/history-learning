@@ -185,8 +185,8 @@ export default function Home() {
       </section>
 
       {/* ====== 中国史 — 王朝巡览 ====== */}
-      <section id="china" className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 pt-3 pb-6" aria-label="中国史">
-        <div className="text-center mb-5 reveal">
+      <section id="china" className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 pt-3 pb-6 scroll-mt-2" aria-label="中国史">
+        <div className="text-center mb-3 reveal">
           <span className="section-pill bg-seal/8 text-seal border border-seal/15">CHINA · 中国史</span>
           <h2 className="font-heading text-3xl sm:text-4xl font-bold text-ink mt-4 mb-3">帝国与王朝</h2>
           <p className="text-ink-muted max-w-lg mx-auto text-sm">悬停朝代节点即览详情，画卷延展，一朝一页</p>
@@ -195,29 +195,27 @@ export default function Home() {
         {/* Dynasty timeline */}
         <div className="scroll-stage reveal">
           <div className="scroll-line">
-            <div className="scroll-dots">
-              {chinaEras.map((era) => (
-                <div
-                  key={era.id}
-                  className={`scroll-dot ${dotColorMap[era.id] ?? 'dc-ochre'} ${activeDynasty === era.id ? 'active' : ''}`}
-                  onMouseEnter={() => handleMouseEnter(era.id)}
-                  onClick={() => handleClick(era.id)}
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter' || e.key === ' ') {
-                      e.preventDefault()
-                      handleClick(era.id)
-                    }
-                  }}
-                  tabIndex={0}
-                  role="button"
-                  aria-label={`${era.name} ${era.startYear}-${era.endYear}`}
-                >
-                  <div className="dot-circle">{era.name.charAt(0)}</div>
-                  <span className="dot-label">{era.name}</span>
-                  <span className="dot-year">{era.startYear}-{era.endYear}</span>
-                </div>
-              ))}
-            </div>
+            {chinaEras.map((era) => (
+              <div
+                key={era.id}
+                className={`scroll-dot ${dotColorMap[era.id] ?? 'dc-ochre'} ${activeDynasty === era.id ? 'active' : ''}`}
+                onMouseEnter={() => handleMouseEnter(era.id)}
+                onClick={() => handleClick(era.id)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault()
+                    handleClick(era.id)
+                  }
+                }}
+                tabIndex={0}
+                role="button"
+                aria-label={`${era.name} ${era.startYear}-${era.endYear}`}
+              >
+                <div className="dot-circle">{era.name.charAt(0)}</div>
+                <span className="dot-label">{era.name}</span>
+                <span className="dot-year">{era.startYear}-{era.endYear}</span>
+              </div>
+            ))}
           </div>
         </div>
 
@@ -260,7 +258,7 @@ export default function Home() {
           ))}
         </div>
 
-        <div className="reveal text-center mt-6">
+        <div className="reveal text-center mt-4">
           <p className="text-xs text-ink-muted/30">更多朝代持续收录中 · 画卷徐徐展开</p>
         </div>
       </section>

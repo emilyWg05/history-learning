@@ -157,22 +157,23 @@ body::before {
 
 .scroll-line {
   position: relative;
-  height: 1px;
-  background: #d4c5a9;
-  min-width: 100%;
-}
-
-.scroll-dots {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
+  height: 0;
+  min-height: 0;
   display: flex;
   align-items: center;
   justify-content: space-around;
-  min-width: max(100%, 640px);
-  padding: 0 1rem;
+  gap: 1rem;
+  padding: 0 1.5rem;
+}
+
+.scroll-line::before {
+  content: '';
+  position: absolute;
+  left: 1.5rem;
+  right: 1.5rem;
+  top: 0;
+  height: 1px;
+  background: #d4c5a9;
 }
 
 .scroll-dot {
@@ -183,8 +184,6 @@ body::before {
   cursor: pointer;
   transition: transform 0.25s ease;
   flex-shrink: 0;
-  position: relative;
-  z-index: 2;
   padding: 0 0.5rem;
 }
 .scroll-dot:hover {
@@ -248,9 +247,9 @@ body::before {
 /* Detail panel */
 .dynasty-showcase {
   max-width: 720px;
-  margin: 2.5rem auto 0;
+  margin: 1.5rem auto 0;
   position: relative;
-  min-height: 260px;
+  min-height: 240px;
 }
 .dynasty-pane {
   position: absolute;
