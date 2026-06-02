@@ -4,7 +4,7 @@ import { MODULE_LABELS } from '../../types/era'
 import EraSelector from './EraSelector'
 
 const moduleNav = [
-  { id: 'home', label: '首页' },
+  { id: 'home', label: '总览' },
   { id: 'emperors', label: '君主图鉴' },
   { id: 'politics', label: '政治' },
   { id: 'economy', label: '经济' },
@@ -52,21 +52,24 @@ export default function Header() {
   const breadcrumbs = useBreadcrumbs()
 
   return (
-    <header className="relative z-20 border-b border-border/50">
-      <div className="max-w-6xl mx-auto px-6">
+    <header className="sticky top-0 z-20 border-b border-border/40 bg-[rgb(244,240,231)]">
+      <div className="max-w-6xl mx-auto px-6 md:px-10">
         {/* Top bar */}
         <div className="flex items-center justify-between py-4">
-          <Link
-            to="/"
-            className="font-heading text-2xl font-bold text-ink tracking-wide hover:text-ochre transition-colors"
-          >
-            史鉴
+          <Link to="/" className="flex items-center gap-3">
+            <span className="seal text-sm">史鉴</span>
           </Link>
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-5">
             <EraSelector currentEraId={eraId} />
             <Link
+              to="/qa"
+              className="text-sm text-ink-muted hover:text-cinnabar transition-colors font-heading tracking-[0.15em]"
+            >
+              问古
+            </Link>
+            <Link
               to="/review"
-              className="text-sm text-ink-light hover:text-seal transition-colors"
+              className="text-sm text-ink-muted hover:text-cinnabar transition-colors font-heading tracking-[0.15em]"
             >
               复习清单
             </Link>
@@ -75,7 +78,7 @@ export default function Header() {
 
         {/* Breadcrumb path */}
         {location.pathname !== '/' && (
-          <nav className="flex items-center gap-1.5 text-sm text-ink-light/60 pb-4">
+          <nav className="flex items-center gap-1.5 text-sm text-ink-muted/50 pb-4">
             {breadcrumbs.map((crumb, i) => (
               <span key={i} className="flex items-center gap-1.5">
                 {i > 0 && (
@@ -84,7 +87,7 @@ export default function Header() {
                   </svg>
                 )}
                 {crumb.href ? (
-                  <Link to={crumb.href} className="hover:text-ochre transition-colors">
+                  <Link to={crumb.href} className="hover:text-cinnabar transition-colors">
                     {crumb.label}
                   </Link>
                 ) : (
@@ -97,7 +100,7 @@ export default function Header() {
 
         {/* Module navigation */}
         {eraId && eras.some(e => e.id === eraId) && (
-          <nav className="flex gap-1 pb-2 overflow-x-auto scrollbar-hide">
+          <nav className="flex gap-1.5 pb-3 overflow-x-auto scrollbar-hide">
             {moduleNav.map((mod) => {
               const path = mod.id === 'home' ? `/${eraId}` : `/${eraId}/${mod.id}`
               const isActive = mod.id === 'home'
@@ -107,10 +110,10 @@ export default function Header() {
                 <Link
                   key={mod.id}
                   to={path}
-                  className={`shrink-0 px-3 py-1.5 text-sm rounded transition-colors ${
+                  className={`shrink-0 px-4 py-1.5 text-sm rounded-sm transition-all font-heading tracking-[0.12em] ${
                     isActive
-                      ? 'bg-ochre/10 text-ochre font-medium'
-                      : 'text-ink-light hover:text-ink hover:bg-border/30'
+                      ? 'bg-cinnabar text-paper shadow-sm'
+                      : 'text-ink-muted hover:text-ink hover:bg-ink/5'
                   }`}
                 >
                   {mod.label}

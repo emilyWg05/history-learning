@@ -23,20 +23,20 @@ export default function FlashCard({ front, back, isFlipped, onFlip }: Props) {
       >
         {/* Front */}
         <div
-          className="absolute inset-0 bg-paper-light border border-border rounded-xl p-6 flex flex-col items-center justify-center"
+          className="absolute inset-0 bg-card border border-border/60 rounded-sm p-6 flex flex-col items-center justify-center"
           style={{ backfaceVisibility: 'hidden' }}
         >
           {front}
-          <p className="text-xs text-ink-light/40 mt-4">点击翻转查看详情</p>
+          <p className="text-xs text-ink-muted/40 mt-4 font-body-sans">点击翻转查看详情</p>
         </div>
 
         {/* Back */}
         <div
-          className="absolute inset-0 bg-paper-light border border-ochre/20 rounded-xl p-6 overflow-y-auto"
+          className="absolute inset-0 bg-card border border-cinnabar/20 rounded-sm p-6 overflow-y-auto"
           style={{ backfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}
         >
           {back}
-          <p className="text-xs text-ink-light/40 mt-4 text-center">点击翻转回到正面</p>
+          <p className="text-xs text-ink-muted/40 mt-4 text-center font-body-sans">点击翻转回到正面</p>
         </div>
       </motion.div>
     </div>

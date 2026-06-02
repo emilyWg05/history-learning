@@ -6,7 +6,6 @@ import { yuanOverview } from '../data/yuan'
 import { mingOverview } from '../data/ming'
 import { tangOverview } from '../data/tang'
 import { wudaiOverview } from '../data/wudai'
-import { MODULE_LABELS } from '../types/era'
 
 const eraOverviews: Record<string, typeof songOverview> = {
   song: songOverview,
@@ -23,8 +22,8 @@ export default function EraOverview() {
   if (!era) {
     return (
       <div className="text-center py-20">
-        <p className="text-ink-light">未找到该时代</p>
-        <Link to="/" className="text-ochre hover:underline mt-4 inline-block">返回首页</Link>
+        <p className="text-ink-muted">未找到该时代</p>
+        <Link to="/" className="text-cinnabar hover:underline mt-4 inline-block font-heading tracking-[0.15em]">返回首页</Link>
       </div>
     )
   }
@@ -38,65 +37,53 @@ export default function EraOverview() {
       exit={{ opacity: 0, y: -20 }}
       className="py-8"
     >
-      <div className="text-center mb-12">
-        <h1 className="font-heading text-4xl font-bold text-ink mb-3">
+      {/* Hero */}
+      <div className="text-center pt-1 pb-2">
+        <h1 className="font-heading text-3xl sm:text-4xl font-bold text-ink">
           {era.name}
         </h1>
-        <p className="text-ink-light/70">
+        <p className="mt-2 text-ink-muted text-sm font-sans-cn">
           {era.startYear}年 — {era.endYear}年 · 共 {era.endYear - era.startYear} 年
         </p>
-        <div className="decorative-line w-48 mx-auto mt-6" />
+        <div className="h-px w-32 mx-auto mt-4 bg-gradient-to-r from-transparent via-cinnabar/40 to-transparent" />
       </div>
 
-      {overview && (
-        <div className="bg-paper-light border border-border rounded-lg p-6 mb-10">
-          {overview.sections.map((section, i) => (
-            <div key={i} className="mb-6 last:mb-0">
-              <h2 className="font-heading text-lg font-medium text-ochre mb-2 border-b border-border/30 pb-1">
-                {section.heading}
-              </h2>
-              {section.paragraphs.map((p, j) => (
-                <p key={j} className="text-ink-light leading-relaxed mb-3 last:mb-0 hanging-indent">
-                  {p}
-                </p>
-              ))}
+      {/* Periods */}
+      <div className="max-w-3xl mx-auto mb-5">
+        <div className="flex flex-wrap gap-3">
+          {era.periods.map((p) => (
+            <div
+              key={p.id}
+              className="flex-1 text-center bg-card border border-border/60 rounded-sm px-6 py-2.5 hover:border-cinnabar/20 hover:shadow-[0_4px_16px_-8px_rgba(61,50,38,0.12)] transition-all duration-300"
+            >
+              <div className="font-heading text-ink font-bold tracking-[0.1em]">{p.name}</div>
+              <div className="text-xs text-ink-muted/60 mt-0.5 font-body-sans">
+                {p.startYear}年 — {p.endYear}年
+              </div>
             </div>
           ))}
         </div>
-      )}
+      </div>
 
-      <div className="flex justify-center gap-4 mb-10">
-        {era.periods.map((p) => (
-          <div
-            key={p.id}
-            className="text-center bg-paper-light border border-border rounded-lg px-6 py-3"
-          >
-            <div className="font-heading text-ink font-medium">{p.name}</div>
-            <div className="text-xs text-ink-light/60">
-              {p.startYear}年 — {p.endYear}年
-            </div>
+      {/* Overview */}
+      {overview && (
+        <div className="max-w-3xl mx-auto">
+          <div className="bg-card border border-border/60 rounded-sm p-6 md:p-8">
+            {overview.sections.map((section, i) => (
+              <div key={i} className="mb-6 last:mb-0">
+                <h2 className="font-heading text-base font-bold text-cinnabar mb-3 pb-2 border-b border-border/30 tracking-[0.15em]">
+                  {section.heading}
+                </h2>
+                {section.paragraphs.map((p, j) => (
+                  <p key={j} className="text-ink-muted leading-relaxed mb-3 last:mb-0 hanging-indent font-body-sans">
+                    {p}
+                  </p>
+                ))}
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
-
-      <h2 className="font-heading text-xl font-semibold text-ink mb-4 text-center">
-        内容导航
-      </h2>
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
-        {era.modules
-          .filter((m) => m.enabled)
-          .map((mod) => (
-            <Link
-              key={mod.id}
-              to={`/${era.id}/${mod.id}`}
-              className="group bg-paper-light border border-border rounded-lg p-4 text-center hover:border-ochre/30 hover:shadow-md transition-all duration-300"
-            >
-              <span className="font-heading text-ink group-hover:text-ochre transition-colors">
-                {MODULE_LABELS[mod.id as keyof typeof MODULE_LABELS] ?? mod.label}
-              </span>
-            </Link>
-          ))}
-      </div>
+        </div>
+      )}
     </motion.div>
   )
 }

@@ -18,22 +18,22 @@ export default function FigureCard({ figure, onClick }: Props) {
   return (
     <div
       onClick={onClick}
-      className="group bg-paper-light border border-border rounded-lg p-5 cursor-pointer hover:border-ochre/30 hover:shadow-lg transition-all duration-300"
+      className="group bg-card border border-border/60 rounded-sm p-5 cursor-pointer hover:border-cinnabar/20 hover:shadow-[0_12px_32px_-12px_rgba(61,50,38,0.15)] transition-all duration-300"
     >
       <div className="flex items-start justify-between mb-2">
         <div>
-          <h3 className="font-heading text-lg font-semibold text-ink">
+          <h3 className="font-heading text-lg font-bold text-ink">
             {figure.name}
           </h3>
           <div className="flex items-center gap-2 mt-1">
-            <span className="text-xs bg-ochre/10 text-ochre px-2 py-0.5 rounded">
+            <span className="text-xs bg-cinnabar/8 text-cinnabar px-2 py-0.5 rounded-sm">
               {categoryLabel[figure.category]}
             </span>
-            <span className="text-xs text-ink-light/50">
+            <span className="text-xs text-ink-muted/50 font-body-sans">
               {figure.birthYear}—{figure.deathYear}
             </span>
           </div>
-          <p className="text-xs text-ink-light/60 mt-1">
+          <p className="text-xs text-ink-muted/60 mt-1 font-body-sans">
             {figure.courtesyName && `字${figure.courtesyName}`}
             {figure.pseudonym && ` · 号${figure.pseudonym}`}
           </p>
@@ -45,7 +45,7 @@ export default function FigureCard({ figure, onClick }: Props) {
           title={figure.name}
         />
       </div>
-      <p className="text-sm text-ink-light line-clamp-3 leading-relaxed">
+      <p className="text-sm text-ink-muted line-clamp-3 leading-relaxed font-body-sans">
         {figure.biography}
       </p>
       {figure.tags.length > 0 && (
@@ -53,7 +53,7 @@ export default function FigureCard({ figure, onClick }: Props) {
           {figure.tags.map((t) => (
             <span
               key={t}
-              className="text-xs bg-border/30 text-ink-light/70 px-1.5 py-0.5 rounded"
+              className="text-xs bg-cinnabar/5 text-ink-muted/60 px-1.5 py-0.5 rounded-sm"
             >
               {t}
             </span>

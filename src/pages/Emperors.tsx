@@ -27,12 +27,12 @@ const eraTimelines: Record<string, TimelineEvent[]> = {
 }
 
 const categoryStyle: Record<string, string> = {
-  political: 'bg-ochre/10 border-ochre/30 text-ochre',
-  military: 'bg-seal/10 border-seal/30 text-seal',
-  economic: 'bg-gold/10 border-gold/30 text-gold',
-  cultural: 'bg-jade/10 border-jade/30 text-jade',
-  social: 'bg-inkwash/10 border-inkwash/30 text-inkwash',
-  diplomatic: 'bg-jade/10 border-jade/30 text-jade',
+  political: 'bg-cinnabar/8 border-cinnabar/20 text-cinnabar',
+  military: 'bg-seal/8 border-seal/20 text-seal',
+  economic: 'bg-gold/8 border-gold/20 text-gold',
+  cultural: 'bg-jade/8 border-jade/20 text-jade',
+  social: 'bg-inkwash/8 border-inkwash/20 text-inkwash',
+  diplomatic: 'bg-jade/8 border-jade/20 text-jade',
 }
 
 function EmperorTimelineCard({
@@ -58,31 +58,31 @@ function EmperorTimelineCard({
       transition={{ delay: index * 0.03 }}
       className="relative pl-10"
     >
-      <div className="absolute left-0 top-[22px] w-2.5 h-2.5 rounded-full bg-ochre border-2 border-paper z-10 ring-2 ring-border/30 -translate-y-1/2 -translate-x-1/2" />
+      <div className="absolute left-0 top-[22px] w-2.5 h-2.5 rounded-full bg-cinnabar border-2 border-[rgb(244,240,231)] z-10 ring-2 ring-border/30 -translate-y-1/2 -translate-x-1/2" />
 
-      <div className="bg-paper-light border border-border rounded-lg p-5 hover:shadow-md transition-shadow ml-4">
+      <div className="bg-card border border-border/60 rounded-sm p-5 hover:shadow-[0_4px_16px_-8px_rgba(61,50,38,0.12)] transition-shadow ml-4">
         <div className="flex items-start justify-between mb-3">
           <div>
-            <span className="text-xs text-ink-light/50">
+            <span className="text-xs text-ink-muted/50 font-body-sans">
               {periodLabel} · 第{index + 1}位
             </span>
-            <h3 className="font-heading text-xl font-semibold text-ink mt-0.5">
+            <h3 className="font-heading text-xl font-bold text-ink mt-0.5">
               {emperor.templeName
                 ? `${emperor.templeName}`
                 : emperor.name}
               {emperor.templeName && (
-                <span className="text-sm text-ink-light font-normal ml-2">
+                <span className="text-sm text-ink-muted font-normal ml-2">
                   {emperor.name}
                 </span>
               )}
             </h3>
-            <p className="text-xs text-ink-light/60 mt-1">
+            <p className="text-xs text-ink-muted/60 mt-1 font-body-sans">
               在位：{emperor.reignStart}年—{emperor.reignEnd}年
               {emperor.reignEnd > emperor.reignStart
                 ? `（共${emperor.reignEnd - emperor.reignStart}年）`
                 : ''}
             </p>
-            <p className="text-xs text-ink-light/60 mt-0.5">
+            <p className="text-xs text-ink-muted/60 mt-0.5 font-body-sans">
               年号：{emperor.reignTitle}
             </p>
           </div>
@@ -94,17 +94,17 @@ function EmperorTimelineCard({
           />
         </div>
 
-        <p className="text-sm text-ink-light leading-relaxed mb-3">
+        <p className="text-sm text-ink-muted leading-relaxed mb-3 font-body-sans">
           {emperor.biography}
         </p>
 
         {emperor.achievements.length > 0 && (
           <div className="mb-3">
-            <span className="text-xs text-ink-light/50 mr-2">成就</span>
+            <span className="text-xs text-ink-muted/50 mr-2 font-body-sans">成就</span>
             {emperor.achievements.map((a) => (
               <span
                 key={a}
-                className="inline-block text-xs bg-gold/10 text-gold px-2 py-0.5 rounded mr-1 mb-1"
+                className="inline-block text-xs bg-gold/8 text-gold px-2 py-0.5 rounded-sm mr-1 mb-1 font-body-sans"
               >
                 {a}
               </span>
@@ -114,11 +114,11 @@ function EmperorTimelineCard({
 
         {emperor.majorEvents.length > 0 && (
           <div className="mb-3">
-            <span className="text-xs text-ink-light/50 mr-2">相关事件</span>
+            <span className="text-xs text-ink-muted/50 mr-2 font-body-sans">相关事件</span>
             {emperor.majorEvents.map((e) => (
               <span
                 key={e}
-                className="inline-block text-xs bg-seal/5 text-ink-light/70 px-2 py-0.5 rounded mr-1 mb-1"
+                className="inline-block text-xs bg-cinnabar/5 text-ink-muted/70 px-2 py-0.5 rounded-sm mr-1 mb-1 font-body-sans"
               >
                 {e}
               </span>
@@ -128,10 +128,10 @@ function EmperorTimelineCard({
 
         <button
           onClick={onShowEvents}
-          className={`text-sm mt-2 transition-colors ${
+          className={`text-sm mt-2 transition-colors font-heading tracking-[0.1em] ${
             reignEvents.length > 0
-              ? 'text-ochre hover:underline cursor-pointer'
-              : 'text-ink-light/30 cursor-default'
+              ? 'text-cinnabar hover:underline cursor-pointer'
+              : 'text-ink-muted/30 cursor-default'
           }`}
           disabled={reignEvents.length === 0}
         >
@@ -141,7 +141,7 @@ function EmperorTimelineCard({
         </button>
       </div>
 
-      <div className="absolute left-0 top-[22px] -translate-y-1/2 text-xs text-ochre font-heading -translate-x-full pr-3 whitespace-nowrap">
+      <div className="absolute left-0 top-[22px] -translate-y-1/2 text-xs text-cinnabar font-heading -translate-x-full pr-3 whitespace-nowrap">
         {emperor.reignStart}年
       </div>
     </motion.div>
@@ -169,7 +169,7 @@ export default function Emperors() {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -20 }}
-      className="py-8"
+      className="py-8 max-w-3xl mx-auto"
     >
       <div className="flex items-center gap-3 mb-8">
         <h1 className="font-heading text-3xl font-bold text-ink">君主图鉴</h1>
@@ -179,10 +179,10 @@ export default function Emperors() {
       {periodsWithEmperors.map(({ period, emperors: periodEmperors }, pi) => (
         <div key={period.id} className={pi > 0 ? 'mt-12' : ''}>
           <div className="mb-2">
-            <h2 className="font-heading text-xl font-semibold text-ochre mb-1">
+            <h2 className="font-heading text-xl font-bold text-cinnabar mb-1 tracking-[0.1em]">
               {period.name} · {periodEmperors.length}帝
             </h2>
-            <p className="text-xs text-ink-light/50 mb-6">
+            <p className="text-xs text-ink-muted/50 mb-6 font-body-sans">
               {period.startYear}年 — {period.endYear}年 · 历{periodEmperors.length}帝{period.endYear - period.startYear}年
             </p>
           </div>
@@ -209,8 +209,8 @@ export default function Emperors() {
 
           {/* Period end marker */}
           <div className="relative pl-16 mt-6">
-            <div className="absolute left-[calc(4rem-4px)] top-0 w-2 h-2 rounded-full bg-seal/60 border border-paper" />
-            <p className="text-xs text-ink-light/40 pl-4">
+            <div className="absolute left-[calc(4rem-4px)] top-0 w-2 h-2 rounded-full bg-cinnabar/60 border border-[rgb(244,240,231)]" />
+            <p className="text-xs text-ink-muted/40 pl-4 font-body-sans">
               {period.name}终 · {period.endYear}年
             </p>
           </div>
@@ -231,7 +231,7 @@ export default function Emperors() {
               initial={{ scale: 0.95, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.95, opacity: 0 }}
-              className="bg-paper-light border border-border rounded-xl p-6 max-w-xl w-full max-h-[80vh] overflow-y-auto shadow-2xl"
+              className="bg-card border border-border/60 rounded-sm p-6 max-w-xl w-full max-h-[80vh] overflow-y-auto shadow-2xl"
               onClick={(e) => e.stopPropagation()}
             >
               <div className="flex items-start justify-between mb-4">
@@ -239,7 +239,7 @@ export default function Emperors() {
                   <h2 className="font-heading text-xl font-bold text-ink">
                     {selectedEvents.emperor.templeName || selectedEvents.emperor.name} · 在位大事记
                   </h2>
-                  <p className="text-xs text-ink-light/60 mt-0.5">
+                  <p className="text-xs text-ink-muted/60 mt-0.5 font-body-sans">
                     {selectedEvents.emperor.name} · 在位{' '}
                     {selectedEvents.emperor.reignStart}—{selectedEvents.emperor.reignEnd}年
                     （共{selectedEvents.emperor.reignEnd - selectedEvents.emperor.reignStart}年）

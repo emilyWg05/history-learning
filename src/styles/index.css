@@ -18,11 +18,34 @@
   --font-body: "Noto Serif SC", serif;
   --font-body-sans: "Noto Sans SC", "Source Han Sans SC", sans-serif;
   --font-calligraphy: "Ma Shan Zheng", cursive;
+
+  /* New homepage theme tokens */
+  --color-cinnabar: oklch(0.52 0.16 35);
+  --color-background: var(--color-paper);
+  --color-foreground: var(--color-ink);
+  --color-card: var(--color-paper-light);
+  --color-card-foreground: var(--color-ink);
+  --color-popover: var(--color-paper-light);
+  --color-popover-foreground: var(--color-ink);
+  --color-primary: var(--color-cinnabar);
+  --color-primary-foreground: #faf7f0;
+  --color-secondary: var(--color-silk);
+  --color-secondary-foreground: var(--color-ink);
+  --color-muted: var(--color-silk);
+  --color-muted-foreground: var(--color-ink-muted);
+  --color-accent: var(--color-gold);
+  --color-accent-foreground: var(--color-ink);
+  --color-destructive: oklch(0.55 0.2 25);
+  --color-destructive-foreground: #faf7f0;
+  --color-input: var(--color-border);
+  --color-ring: var(--color-cinnabar);
+  --font-serif-cn: "LXGW WenKai", "Noto Serif SC", "Source Han Serif SC", serif;
+  --font-sans-cn: "Noto Sans SC", "Source Han Sans SC", sans-serif;
 }
 
 /* Rice paper texture background */
 body {
-  background-color: #f5f0e8;
+  background-color: rgb(244, 240, 231);
   color: #3d3226;
   font-family: var(--font-body);
   line-height: 1.8;
@@ -46,7 +69,7 @@ body::before {
   width: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: #f5f0e8;
+  background: rgb(244, 240, 231);
 }
 ::-webkit-scrollbar-thumb {
   background: #d4c5a9;

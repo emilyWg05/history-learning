@@ -85,8 +85,8 @@ export default function Figures() {
             onClick={() => setFilter(c.value)}
             className={`shrink-0 px-3 py-1.5 text-sm rounded transition-colors ${
               filter === c.value
-                ? 'bg-ochre/10 text-ochre font-medium'
-                : 'text-ink-light hover:text-ink hover:bg-border/30'
+                ? 'bg-cinnabar text-paper'
+                : 'text-ink-muted hover:text-ink hover:bg-ink/5'
             }`}
           >
             {c.label}
@@ -117,7 +117,7 @@ export default function Figures() {
               initial={{ scale: 0.95, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.95, opacity: 0 }}
-              className="bg-paper-light border border-border rounded-xl p-6 max-w-lg w-full max-h-[80vh] overflow-y-auto shadow-2xl"
+              className="bg-card border border-border/60 rounded-sm p-6 max-w-lg w-full max-h-[80vh] overflow-y-auto shadow-2xl"
               onClick={(e) => e.stopPropagation()}
             >
               <div className="flex items-start justify-between mb-4">

@@ -1,5 +1,6 @@
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, useLocation } from 'react-router-dom'
 import { AnimatePresence } from 'framer-motion'
+import ScrollToTop from './components/ui/ScrollToTop'
 import Layout from './components/layout/Layout'
 import Home from './pages/Home'
 import EraOverview from './pages/EraOverview'
@@ -14,13 +15,18 @@ import EthnicGroups from './pages/EthnicGroups'
 import Figures from './pages/Figures'
 import Timeline from './pages/Timeline'
 import Review from './pages/Review'
+import QAPage from './pages/QAPage'
+import TestHomepage from './pages/TestHomepage'
 
 export default function App() {
+  const location = useLocation()
   return (
     <AnimatePresence mode="wait">
-      <Routes>
+      <ScrollToTop />
+      <Routes location={location} key={location.pathname}>
+        <Route path="/" element={<Home />} />
+        <Route path="/test-homepage" element={<TestHomepage />} />
         <Route element={<Layout />}>
-          <Route path="/" element={<Home />} />
           <Route path="/:eraId" element={<EraOverview />} />
           <Route path="/:eraId/emperors" element={<Emperors />} />
           <Route path="/:eraId/politics" element={<Politics />} />
@@ -33,6 +39,7 @@ export default function App() {
           <Route path="/:eraId/figures" element={<Figures />} />
           <Route path="/:eraId/timeline" element={<Timeline />} />
           <Route path="/review" element={<Review />} />
+          <Route path="/qa" element={<QAPage />} />
         </Route>
       </Routes>
     </AnimatePresence>

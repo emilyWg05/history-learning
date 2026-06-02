@@ -22,3 +22,10 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# RAG system
+history_vectordb/
+.env
+test_api.py
+start_backend.ps1
+*_cache/
