@@ -1,0 +1,6 @@
+@echo off
+cd /d "%~dp0"
+echo Starting Python RAG server...
+start "史鉴-RAG-Server" cmd /c "uvicorn server:app --port 8000"
+echo Starting Vite dev server...
+"D:\Program Files\nodejs\npm.cmd" run dev -- --host 127.0.0.1 --port 5300 --strictPort

@@ -59,8 +59,19 @@ export default function QAPage() {
         )
       )
     } catch (e) {
-      setError(`请求失败: ${e instanceof Error ? e.message : String(e)}`)
-      setQaList(prev => prev.filter(item => item.id !== id))
+      const msg = e instanceof Error ? e.message : String(e)
+      if (msg.includes('Failed to fetch') || msg.includes('NetworkError')) {
+        setQaList(prev =>
+          prev.map(item =>
+            item.id === id
+              ? { ...item, answer: '问答服务未启动，请在项目目录运行 start-dev.cmd 启动后端服务', sources: [] }
+              : item
+          )
+        )
+      } else {
+        setError(`请求失败: ${msg}`)
+        setQaList(prev => prev.filter(item => item.id !== id))
+      }
     } finally {
       setLoading(false)
     }
