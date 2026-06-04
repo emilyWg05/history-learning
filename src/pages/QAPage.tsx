@@ -43,7 +43,11 @@ export default function QAPage() {
     setQaList(prev => [...prev, { id, question: q, answer: '', sources: [] }])
 
     try {
-      const res = await fetch('/api/ask', {
+      const host = window.location.hostname
+      const isLocal = host === 'localhost' || host === '127.0.0.1' ||
+        /^(10\.|172\.(1[6-9]|2\d|3[01])\.|192\.168\.)/.test(host)
+      const apiHost = isLocal ? host : 'localhost'
+      const res = await fetch(`http://${apiHost}:8080/api/ask`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ question: q }),
