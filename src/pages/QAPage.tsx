@@ -43,7 +43,7 @@ export default function QAPage() {
     setQaList(prev => [...prev, { id, question: q, answer: '', sources: [] }])
 
     try {
-      const res = await fetch('http://localhost:8080/api/ask', {
+      const res = await fetch('/api/ask', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ question: q }),
